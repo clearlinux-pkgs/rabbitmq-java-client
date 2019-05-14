@@ -1,0 +1,25 @@
+From dd0c478a575a492a35442bc1ac8efc1b49cf31de Mon Sep 17 00:00:00 2001
+From: "Wang, Long" <long1.wang@intel.com>
+Date: Mon, 13 May 2019 11:38:08 +0800
+Subject: [PATCH] disable the automatic test cluster setup
+
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 13f9fa7..1a94097 100644
+--- a/Makefile
++++ b/Makefile
+@@ -30,7 +30,7 @@ $(DEPS_DIR)/rabbitmq_ct_helpers:
+	git clone https://github.com/rabbitmq/rabbitmq-ct-helpers.git "$@"
+
+ tests: deps
+-	$(MVN) $(MVN_FLAGS) verify
++	$(MVN) $(MVN_FLAGS) verify -P '!setup-test-cluster'
+
+ deploy:
+	$(MVN) $(MVN_FLAGS) deploy
+--
+2.21.0
+

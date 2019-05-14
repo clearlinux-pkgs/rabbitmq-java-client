@@ -1,0 +1,2 @@
+mkdir -p %{buildroot}/usr/share/rabbitmq-java-client
+cp -R target/*.jar %{buildroot}/usr/share/rabbitmq-java-client/
