@@ -4,7 +4,7 @@
 #
 Name     : rabbitmq-java-client
 Version  : 5.7.0
-Release  : 1
+Release  : 2
 URL      : https://github.com/rabbitmq/rabbitmq-java-client/archive/v5.7.0.tar.gz
 Source0  : https://github.com/rabbitmq/rabbitmq-java-client/archive/v5.7.0.tar.gz
 Source1  : https://github.com/DeadZen/goldrush/archive/0.2.0.tar.gz
@@ -22,7 +22,6 @@ License  : Apache-2.0 BSD-2-Clause BSD-3-Clause GPL-2.0 HPND MIT MPL-1.1 MPL-2.0
 Requires: rabbitmq-java-client-data = %{version}-%{release}
 Requires: rabbitmq-java-client-license = %{version}-%{release}
 BuildRequires : apache-maven
-BuildRequires : maven-dep
 BuildRequires : openjdk
 BuildRequires : openjdk-dev
 BuildRequires : rabbitmq-java-client-dep
@@ -90,20 +89,23 @@ cp -r %{_topdir}/BUILD/syslog-3.4.5/* %{_topdir}/BUILD/rabbitmq-java-client-5.7.
 %build
 ## build_prepend content
 mkdir -p /builddir/.m2
-cp -r /usr/share/apache-maven/.m2/* /builddir/.m2/
 cp -r /usr/share/rabbitmq-java-client/.m2/* /builddir/.m2/
 ## build_prepend end
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1557804538
-export LDFLAGS="${LDFLAGS} -fno-lto"
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1563294254
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$CFLAGS -fno-lto "
+export FFLAGS="$CFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
 make  %{?_smp_mflags} all && (make %{?_smp_mflags} tests || :)
 
 
 %install
-export SOURCE_DATE_EPOCH=1557804538
+export SOURCE_DATE_EPOCH=1563294254
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/rabbitmq-java-client
 cp LICENSE-APACHE2 %{buildroot}/usr/share/package-licenses/rabbitmq-java-client/LICENSE-APACHE2

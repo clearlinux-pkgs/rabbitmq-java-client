@@ -1,4 +1,3 @@
 mkdir -p /builddir/.m2
-cp -r /usr/share/apache-maven/.m2/* /builddir/.m2/
 cp -r /usr/share/rabbitmq-java-client/.m2/* /builddir/.m2/
 
