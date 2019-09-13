@@ -4,7 +4,7 @@
 #
 Name     : rabbitmq-java-client
 Version  : 5.7.0
-Release  : 2
+Release  : 3
 URL      : https://github.com/rabbitmq/rabbitmq-java-client/archive/v5.7.0.tar.gz
 Source0  : https://github.com/rabbitmq/rabbitmq-java-client/archive/v5.7.0.tar.gz
 Source1  : https://github.com/DeadZen/goldrush/archive/0.2.0.tar.gz
@@ -22,10 +22,132 @@ License  : Apache-2.0 BSD-2-Clause BSD-3-Clause GPL-2.0 HPND MIT MPL-1.1 MPL-2.0
 Requires: rabbitmq-java-client-data = %{version}-%{release}
 Requires: rabbitmq-java-client-license = %{version}-%{release}
 BuildRequires : apache-maven
+BuildRequires : mvn-HdrHistogram
+BuildRequires : mvn-LatencyUtils
+BuildRequires : mvn-aether-core
+BuildRequires : mvn-ant
+BuildRequires : mvn-ant-launcher
+BuildRequires : mvn-apache
+BuildRequires : mvn-asm
+BuildRequires : mvn-assertj-core
+BuildRequires : mvn-assertj-parent-pom
+BuildRequires : mvn-awaitility
+BuildRequires : mvn-backport-util-concurrent
+BuildRequires : mvn-beanshell
+BuildRequires : mvn-biz.aQute.bndlib
+BuildRequires : mvn-build-helper-maven-plugin
+BuildRequires : mvn-byte-buddy
+BuildRequires : mvn-classworlds
+BuildRequires : mvn-commons-cli
+BuildRequires : mvn-commons-codec
+BuildRequires : mvn-commons-collections
+BuildRequires : mvn-commons-compress
+BuildRequires : mvn-commons-io
+BuildRequires : mvn-commons-lang
+BuildRequires : mvn-commons-logging
+BuildRequires : mvn-commons-parent
+BuildRequires : mvn-doxia
+BuildRequires : mvn-doxia-sitetools
+BuildRequires : mvn-easymock
+BuildRequires : mvn-felix
+BuildRequires : mvn-file-management
+BuildRequires : mvn-gmaven
+BuildRequires : mvn-gossip
+BuildRequires : mvn-groovy
+BuildRequires : mvn-guava
+BuildRequires : mvn-guice
+BuildRequires : mvn-hamcrest
+BuildRequires : mvn-httpcomponents-client
+BuildRequires : mvn-httpcomponents-core
+BuildRequires : mvn-jackson-annotations
+BuildRequires : mvn-jackson-bom
+BuildRequires : mvn-jackson-core
+BuildRequires : mvn-jackson-databind
+BuildRequires : mvn-jackson-parent
+BuildRequires : mvn-jansi
+BuildRequires : mvn-jdom
+BuildRequires : mvn-jline
+BuildRequires : mvn-jsr305
+BuildRequires : mvn-junit
+BuildRequires : mvn-junit5
+BuildRequires : mvn-keytool
+BuildRequires : mvn-logback-classic
+BuildRequires : mvn-logback-core
+BuildRequires : mvn-maven
+BuildRequires : mvn-maven-aether-provider
+BuildRequires : mvn-maven-archiver
+BuildRequires : mvn-maven-artifact
+BuildRequires : mvn-maven-artifact-manager
+BuildRequires : mvn-maven-bundle-plugin
+BuildRequires : mvn-maven-compat
+BuildRequires : mvn-maven-compiler-plugin
+BuildRequires : mvn-maven-core
+BuildRequires : mvn-maven-error-diagnostics
+BuildRequires : mvn-maven-filtering
+BuildRequires : mvn-maven-jar-plugin
+BuildRequires : mvn-maven-model
+BuildRequires : mvn-maven-model-builder
+BuildRequires : mvn-maven-monitor
+BuildRequires : mvn-maven-packagecloud-wagon
+BuildRequires : mvn-maven-parent
+BuildRequires : mvn-maven-plugin-api
+BuildRequires : mvn-maven-plugin-descriptor
+BuildRequires : mvn-maven-plugin-parameter-documenter
+BuildRequires : mvn-maven-plugin-registry
+BuildRequires : mvn-maven-plugin-tools
+BuildRequires : mvn-maven-plugins
+BuildRequires : mvn-maven-profile
+BuildRequires : mvn-maven-project
+BuildRequires : mvn-maven-reporting-api
+BuildRequires : mvn-maven-repository-metadata
+BuildRequires : mvn-maven-resources-plugin
+BuildRequires : mvn-maven-settings
+BuildRequires : mvn-maven-settings-builder
+BuildRequires : mvn-maven-shared
+BuildRequires : mvn-maven-shared-utils
+BuildRequires : mvn-maven-source-plugin
+BuildRequires : mvn-maven-surefire
+BuildRequires : mvn-maven-toolchain
+BuildRequires : mvn-metrics
+BuildRequires : mvn-micrometer
+BuildRequires : mvn-mockito-core
+BuildRequires : mvn-mojo-parent
+BuildRequires : mvn-mvnplugins
+BuildRequires : mvn-objenesis
+BuildRequires : mvn-org.apache.felix.bundlerepository
+BuildRequires : mvn-org.osgi.compendium
+BuildRequires : mvn-org.osgi.core
+BuildRequires : mvn-oro
+BuildRequires : mvn-oss-parents
+BuildRequires : mvn-ow2
+BuildRequires : mvn-plexus
+BuildRequires : mvn-plexus-archiver
+BuildRequires : mvn-plexus-build-api
+BuildRequires : mvn-plexus-cipher
+BuildRequires : mvn-plexus-classworlds
+BuildRequires : mvn-plexus-compiler
+BuildRequires : mvn-plexus-containers
+BuildRequires : mvn-plexus-i18n
+BuildRequires : mvn-plexus-interactivity
+BuildRequires : mvn-plexus-interpolation
+BuildRequires : mvn-plexus-io
+BuildRequires : mvn-plexus-languages
+BuildRequires : mvn-plexus-utils
+BuildRequires : mvn-plexus-velocity
+BuildRequires : mvn-qdox
+BuildRequires : mvn-sisu
+BuildRequires : mvn-sisu-guice
+BuildRequires : mvn-slf4j
+BuildRequires : mvn-snappy
+BuildRequires : mvn-sonatype-aether
+BuildRequires : mvn-sonatype-plexus-sec-dispatcher
+BuildRequires : mvn-velocity
+BuildRequires : mvn-wagon
+BuildRequires : mvn-xz
 BuildRequires : openjdk
 BuildRequires : openjdk-dev
-BuildRequires : rabbitmq-java-client-dep
 Patch1: 0001-disable-the-automatic-test-cluster-setup.patch
+Patch2: 0002-enable-compilation-in-offline-mode.patch
 
 %description
 Put your EZs here and use rabbitmq-plugins to enable them.
@@ -85,17 +207,18 @@ cp -r %{_topdir}/BUILD/rebar-2.6.4/* %{_topdir}/BUILD/rabbitmq-java-client-5.7.0
 mkdir -p deps/syslog
 cp -r %{_topdir}/BUILD/syslog-3.4.5/* %{_topdir}/BUILD/rabbitmq-java-client-5.7.0/deps/syslog
 %patch1 -p1
+%patch2 -p1
 
 %build
 ## build_prepend content
-mkdir -p /builddir/.m2
-cp -r /usr/share/rabbitmq-java-client/.m2/* /builddir/.m2/
+cp -r /usr/share/java/.m2/* /builddir/.m2
+cp -r %{_topdir}/BUILD/rabbitmq-java-client-5.7.0/deps/* /builddir/.m2
 ## build_prepend end
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1563294254
+export SOURCE_DATE_EPOCH=1568350564
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
@@ -105,7 +228,7 @@ make  %{?_smp_mflags} all && (make %{?_smp_mflags} tests || :)
 
 
 %install
-export SOURCE_DATE_EPOCH=1563294254
+export SOURCE_DATE_EPOCH=1568350564
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/rabbitmq-java-client
 cp LICENSE-APACHE2 %{buildroot}/usr/share/package-licenses/rabbitmq-java-client/LICENSE-APACHE2

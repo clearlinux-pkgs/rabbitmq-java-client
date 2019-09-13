@@ -1,0 +1,26 @@
+From 89dde458f9138b7dc93c5214f5fdfb2a6d3f9eb5 Mon Sep 17 00:00:00 2001
+From: Chang Rebecca Swee Fun <rebecca.swee.fun.chang@intel.com>
+Date: Fri, 13 Sep 2019 12:38:26 +0800
+Subject: [PATCH] enable compilation in offline mode
+
+Signed-off-by: Chang Rebecca Swee Fun <rebecca.swee.fun.chang@intel.com>
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 1a94097..adcac1b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -9,7 +9,7 @@ DEPS_DIR = deps
+ endif
+ endif
+ 
+-MVN_FLAGS += -Ddeps.dir="$(abspath $(DEPS_DIR))"
++MVN_FLAGS += --offline -Dmaven.repo.local=/builddir/.m2
+ 
+ .PHONY: all deps tests clean distclean
+ 
+-- 
+2.23.0
+

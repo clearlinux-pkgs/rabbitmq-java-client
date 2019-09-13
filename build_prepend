@@ -1,3 +1,2 @@
-mkdir -p /builddir/.m2
-cp -r /usr/share/rabbitmq-java-client/.m2/* /builddir/.m2/
-
+cp -r /usr/share/java/.m2/* /builddir/.m2
+cp -r %{_topdir}/BUILD/rabbitmq-java-client-5.7.0/deps/* /builddir/.m2
